@@ -1,5 +1,6 @@
 import { postData } from "./utils/httpReq.js";
-import { setCookie } from "./utils/cookie.js";
+import { setCookie, getCookie } from "./utils/cookie.js";
+import authHandler from "./utils/authorization.js";
 
 const inputBox = document.querySelectorAll("input");
 const loginButton = document.querySelector("button");
@@ -16,3 +17,4 @@ const submitHandler = async (event) => {
 };
 
 loginButton.addEventListener("click", submitHandler);
+document.addEventListener("DOMContentLoaded", authHandler);
