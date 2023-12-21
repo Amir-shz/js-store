@@ -10,6 +10,8 @@ const inputBox = document.querySelector("input");
 const listItems = document.querySelectorAll("li");
 
 let allProducts = null;
+let search = "";
+let category = "all";
 
 const showProducts = (products) => {
   mainContent.innerHTML = "";
@@ -51,20 +53,36 @@ const init = async () => {
   showProducts(allProducts);
 };
 
-const searchHandler = () => {
-  const query = inputBox.value.trim().toLowerCase();
-  if (!query) {
-    return showProducts(allProducts);
-  }
-  const filteredProducts = allProducts.filter((product) =>
-    product.title.toLowerCase().includes(query)
-  );
-
+const filterProducts = () => {
+  let filteredProducts = null;
+  filteredProducts = allProducts.filter((product) => {
+    if (category === "all") {
+      return product.title.toLowerCase().includes(search);
+    } else {
+      return (
+        product.title.toLowerCase().includes(search) &&
+        product.category.toLowerCase() === category
+      );
+    }
+  });
   showProducts(filteredProducts);
 };
 
+const searchHandler = () => {
+  search = inputBox.value.trim().toLowerCase();
+  // if (!search) {
+  //   return showProducts(allProducts);
+  // }
+  // const filteredProducts = allProducts.filter((product) =>
+  //   product.title.toLowerCase().includes(search)
+  // );
+
+  // showProducts(filteredProducts);
+  filterProducts();
+};
+
 const filterHandler = (event) => {
-  const category = event.target.innerText.toLowerCase();
+  category = event.target.innerText.toLowerCase();
   listItems.forEach((li) => {
     if (li.innerText.toLowerCase() === category) {
       li.className = "selected";
@@ -73,13 +91,14 @@ const filterHandler = (event) => {
     }
   });
 
-  if (category === "all") {
-    return showProducts(allProducts);
-  }
-  const filteredProducts = allProducts.filter((product) => {
-    return product.category.toLowerCase() === category;
-  });
-  showProducts(filteredProducts);
+  filterProducts();
+  // if (category === "all") {
+  //   return showProducts(allProducts);
+  // }
+  // const filteredProducts = allProducts.filter((product) => {
+  //   return product.category.toLowerCase() === category;
+  // });
+  // showProducts(filteredProducts);
 };
 
 document.addEventListener("DOMContentLoaded", init);
