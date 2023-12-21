@@ -27,7 +27,9 @@ body {
   border-bottom-color: transparent;
   border-top-color: transparent;
   border-radius: 50%;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   animation: rotation 0.8s linear infinite;
 }
 
